@@ -14,6 +14,7 @@
 - /images
     - icon.ico
     - Layout.png
+- licence
 
 <br>
 
