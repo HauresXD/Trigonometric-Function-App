@@ -4,3 +4,4 @@
 - default python
 - matplotlib
 - tkinter
+- PyInstaller
