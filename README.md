@@ -1,3 +1,6 @@
-# MINIPROJEKT
+# Goniometrické funkce
 
-edit
+## knihovny:
+- default python
+- matplotlib
+- tkinter
