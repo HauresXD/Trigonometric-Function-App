@@ -1,6 +1,6 @@
 # Goniometrické funkce
 
-## knihovny:
+### knihovny:
 - default python
 - matplotlib
 - tkinter
