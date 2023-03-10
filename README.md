@@ -8,9 +8,18 @@
 
 <br>
 
+### obsah:
+- main.py
+- README.md
+- /images
+    - icon.ico
+    -Layout.png
+
+<br>
+
 ### ToDo:
-- README.? s popisem instalace 
+- README.? s popisem
     - potřebné knihovny
-    - popis pro Windows (exe)
-    - popis pro Linux (sh script)
+    - popis instalace pro Windows (exe)
+    - popis instalace pro Linux (sh script)
 - přidat bind pro ENTER
