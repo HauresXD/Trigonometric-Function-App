@@ -23,4 +23,3 @@
     - popis instalace pro Windows (exe)
     - popis instalace pro Linux (sh script)
 - přidat bind pro ENTER
-- přidat WTFPL licenci
