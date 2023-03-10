@@ -13,7 +13,7 @@
 - README.md
 - /images
     - icon.ico
-    -Layout.png
+    - Layout.png
 
 <br>
 
