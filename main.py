@@ -48,8 +48,52 @@ class Application(tk.Tk):
         self.displaySelectBtn.pack(side=tk.RIGHT, padx=20)
 
         # Options Frame - graph selections
-        
+        self.selectionFrame = tk.Frame(self.optionsFrame)
+        self.selectionFrame.pack(fill=tk.X, pady=50)
 
+        # Graph selections left side
+        self.labelA = tk.Label(self.selectionFrame, text="Hodnota A:")
+        self.labelA.grid(row=0, column=0, padx=10, pady=2)
+        self.entryA = tk.Entry(self.selectionFrame)
+        self.entryA.grid(row=0, column=1, padx=10, pady=2)
+        self.labelB = tk.Label(self.selectionFrame, text="Hodnota B:")
+        self.labelB.grid(row=1, column=0, padx=10, pady=2)
+        self.entryB = tk.Entry(self.selectionFrame)
+        self.entryB.grid(row=1, column=1, padx=10, pady=2)
+        self.labelC = tk.Label(self.selectionFrame, text="Hodnota C:")
+        self.labelC.grid(row=2, column=0, padx=10, pady=2)
+        self.entryC = tk.Entry(self.selectionFrame)
+        self.entryC.grid(row=2, column=1, padx=10, pady=2)
+        self.labelD = tk.Label(self.selectionFrame, text="Hodnota D:")
+        self.labelD.grid(row=3, column=0, padx=10, pady=2)
+        self.entryD = tk.Entry(self.selectionFrame)
+        self.entryD.grid(row=3, column=1, padx=10, pady=2)
+        self.labelTypeCBox = tk.Label(self.selectionFrame, text="Typ grafu:")
+        self.labelTypeCBox.grid(row=4, column=0, padx=10, pady=2)
+        self.typeCBox = ttk.Combobox(self.selectionFrame, values=("sin", "cos", "tg", "cotg"))
+        self.typeCBox.grid(row=4, column=1, padx=10, pady=2)
+
+        # Graph selections right side
+        self.labelXAxis = tk.Label(self.selectionFrame, text="Osa X:")
+        self.labelXAxis.grid(row=0, column=2, padx=10, pady=2)
+        self.entryXAxis = tk.Entry(self.selectionFrame)
+        self.entryXAxis.grid(row=0, column=3, padx=10, pady=2)
+        self.labelYAxis = tk.Label(self.selectionFrame, text="Osa Y:")
+        self.labelYAxis.grid(row=1, column=2, padx=10, pady=2)
+        self.entryYAxis = tk.Entry(self.selectionFrame)
+        self.entryYAxis.grid(row=1, column=3, padx=10, pady=2)
+        self.labelName = tk.Label(self.selectionFrame, text="Název:")
+        self.labelName.grid(row=2, column=2, padx=10, pady=2)
+        self.entryName = tk.Entry(self.selectionFrame)
+        self.entryName.grid(row=2, column=3, padx=10, pady=2)
+        self.labelLineWidth = tk.Label(self.selectionFrame, text="Tloušťka čar:")
+        self.labelLineWidth.grid(row=3, column=2, padx=10, pady=2)
+        self.entryLineWidth = tk.Entry(self.selectionFrame)
+        self.entryLineWidth.grid(row=3, column=3, padx=10, pady=2)
+        self.labelGrid = tk.Label(self.selectionFrame, text="Mřížka:")
+        self.labelGrid.grid(row=4, column=2, padx=10, pady=2)
+        self.gridChBox = tk.Checkbutton(self.selectionFrame)
+        self.gridChBox.grid(row=4, column=3, padx=10, pady=2)
         
 
     def quit(self, event=None):
