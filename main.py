@@ -40,12 +40,15 @@ class Application(tk.Tk):
         self.displayFrame = tk.Frame(self.optionsFrame)
         self.displayFrame.pack(fill=tk.X)
         self.displayOptVar = tk.StringVar(value="program")
-        self.displayOpt1 = tk.Radiobutton(self.displayFrame, text="V Programu", variable=self.displayOptVar, value="program")
+        self.displayOpt1 = tk.Radiobutton(self.displayFrame, text="V Programu", font=(None, 12), variable=self.displayOptVar, value="program")
         self.displayOpt1.pack(side=tk.LEFT, padx=20)
-        self.displayOpt2 = tk.Radiobutton(self.displayFrame, text="Samostatně", variable=self.displayOptVar, value="standalone")
+        self.displayOpt2 = tk.Radiobutton(self.displayFrame, text="Samostatně", font=(None, 12), variable=self.displayOptVar, value="standalone")
         self.displayOpt2.pack(side=tk.LEFT, padx=20)
         self.displaySelectBtn = tk.Button(self.displayFrame, text="Vybrat Soubor")
         self.displaySelectBtn.pack(side=tk.RIGHT, padx=20)
+
+        # Options Frame - graph selections
+        
 
         
 
