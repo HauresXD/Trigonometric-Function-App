@@ -13,6 +13,7 @@
 - README.md
 - /images
     - icon.ico
+    - icon.png
     - Layout.png
 - licence
 
