@@ -5,8 +5,11 @@ import tkinter as tk
 import tkinter.ttk as ttk
 import platform
 from math import sin, cos, tan
-# from matplotlib import pyplot as plt
+import matplotlib
+from matplotlib import pyplot as plt
 
+
+matplotlib.use('Qt5Agg')
 class Application(tk.Tk):
     name = basename(splitext(basename(__file__.capitalize()))[0])
     name = "Goniometrické funkce"
@@ -41,6 +44,7 @@ class Application(tk.Tk):
         ## Options Frame - display options
         self.displayFrame = tk.Frame(self.optionsFrame)
         self.displayFrame.pack(fill=tk.X)
+        # var kde vykreslit graf
         self.displayOptVar = tk.StringVar(value="program")
         self.displayOpt1 = tk.Radiobutton(self.displayFrame, text="V Programu", font=(None, 12), variable=self.displayOptVar, value="program")
         self.displayOpt1.pack(side=tk.LEFT, padx=20)
@@ -93,9 +97,10 @@ class Application(tk.Tk):
         self.labelLineWidth.grid(row=3, column=2, padx=10, pady=15)
         self.entryLineWidth = tk.Entry(self.selectionFrame)
         self.entryLineWidth.grid(row=3, column=3, padx=10, pady=15)
+        self.gridOptVar = tk.IntVar(value=0)
         self.labelGrid = tk.Label(self.selectionFrame, text="Mřížka:")
         self.labelGrid.grid(row=4, column=2, padx=10, pady=15)
-        self.gridChBox = tk.Checkbutton(self.selectionFrame)
+        self.gridChBox = tk.Checkbutton(self.selectionFrame, variable=self.gridOptVar)
         self.gridChBox.grid(row=4, column=3, padx=10, pady=15)
 
         ## Options Frame - action group
@@ -119,20 +124,62 @@ class Application(tk.Tk):
         valAction = self.typeCBox.get()
         display = self.equasionDisplay
 
-        if valAction == "sin":
-            func = "y = {0} * sin({1} + {2}) + {3}".format(valA, valB, valC, valD)
-        elif valAction == "cos":
-            func = "y = {0} * cos({1} + {2}) + {3}".format(valA, valB, valC, valD)
-        elif valAction == "tg":
-            func = "y = {0} * tg({1} + {2}) + {3}".format(valA, valB, valC, valD)
-        elif valAction == "cotg":
-            func = "y = {0} * cotg({1} + {2}) + {3}".format(valA, valB, valC, valD)
-        else:
-            func = "Chybí ti hodnoty!"
+        nameX = self.entryXAxis.get()
+        nameY = self.entryYAxis.get()
+        name = self.entryName.get()
+        lineWidth = self.entryLineWidth.get()
+        grid = self.gridOptVar.get()
+
+        # if valAction == "sin":
+        #     func = "y = {0} * sin({1} + {2}) + {3}".format(valA, valB, valC, valD)
+        #     query = 1
+        #     q = sin(int(valB) + int(valC))
+        #     s = int(valA) * q + int(valD)
+        # elif valAction == "cos":
+        #     func = "y = {0} * cos({1} + {2}) + {3}".format(valA, valB, valC, valD)
+        #     query = 1
+        #     q = cos(int(valB) + int(valC))
+        #     s = int(valA) * q + int(valD)
+        # elif valAction == "tg":
+        #     func = "y = {0} * tg({1} + {2}) + {3}".format(valA, valB, valC, valD)
+        #     query = 1
+        #     q = tan(int(valB) + int(valC))
+        #     s = int(valA) * q + int(valD)
+        # elif valAction == "cotg":
+        #     func = "y = {0} * cotg({1} + {2}) + {3}".format(valA, valB, valC, valD)
+        #     query = 1
+        #     q = 1/(tan(int(valB) + int(valC)))
+        #     s = int(valA) * q + int(valD)
+        # else:
+        #     func = "Chybí ti hodnoty!"
+        #     query = 0
         
-        display.config(state="normal")
-        display.insert(tk.INSERT, func)
-        display.config(state="disabled")
+        # display.config(state="normal")
+        # display.insert(tk.INSERT, func)
+        # display.config(state="disabled")
+
+        # if query != 0:
+        #     plt.plot([1,2,3], [4,5,6])
+        #     if grid == 1:
+        #         plt.grid()
+        #     plt.show()
+
+        # !!!!!!!!!!! WORK IN PROGRESS !!!!!!!!!!
+        x = [1,2,3]
+        y = [4,5,6]
+        if name != "":
+            plt.title(name)
+        if nameX != "":
+            plt.xlabel(nameX)
+        if nameY != "":
+            plt.ylabel(nameY)
+        if lineWidth != "":
+            plt.plot(x, y, linewidth=lineWidth)
+        else:
+            plt.plot(x, y)
+        if grid == 1:
+            plt.grid()
+        plt.show()
 
 
 app = Application()
