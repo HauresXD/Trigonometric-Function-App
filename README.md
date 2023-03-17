@@ -5,6 +5,7 @@
 - matplotlib
 - tkinter
 - PyInstaller
+- math
 
 <br>
 

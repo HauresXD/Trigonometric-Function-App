@@ -4,6 +4,7 @@ from os.path import basename, splitext
 import tkinter as tk
 import tkinter.ttk as ttk
 import platform
+from math import sin, cos, tan
 # from matplotlib import pyplot as plt
 
 class Application(tk.Tk):
@@ -58,7 +59,7 @@ class Application(tk.Tk):
         self.labelA.grid(row=0, column=0, padx=10, pady=15)
         self.entryA = tk.Entry(self.selectionFrame)
         self.entryA.grid(row=0, column=1, padx=10, pady=15)
-        self.labelB = tk.Label(self.selectionFrame, text="Hodnota B:")
+        self.labelB = tk.Label(self.selectionFrame, text="Hodnota B [rad]:")
         self.labelB.grid(row=1, column=0, padx=10, pady=15)
         self.entryB = tk.Entry(self.selectionFrame)
         self.entryB.grid(row=1, column=1, padx=10, pady=15)
@@ -100,7 +101,7 @@ class Application(tk.Tk):
         ## Options Frame - action group
         self.actionFrame = tk.Frame(self.optionsFrame)
         self.actionFrame.pack(side=tk.BOTTOM, fill=tk.X, pady=20)
-        self.drawBtn = tk.Button(self.actionFrame, text="Vykreslit", font=(None, 13))
+        self.drawBtn = tk.Button(self.actionFrame, text="Vykreslit", font=(None, 13), command=self.draw)
         self.drawBtn.grid(row=0, column=1, pady=10, sticky=tk.NSEW)
         self.equasionLabel = tk.Label(self.actionFrame, text="Funkce:")
         self.equasionLabel.grid(row=1, column=0, padx=10)
@@ -109,6 +110,29 @@ class Application(tk.Tk):
 
     def quit(self, event=None):
         super().quit()
+
+    def draw(self): 
+        valA = self.entryA.get()
+        valB = self.entryB.get()
+        valC = self.entryC.get()
+        valD = self.entryD.get()
+        valAction = self.typeCBox.get()
+        display = self.equasionDisplay
+
+        if valAction == "sin":
+            func = "y = {0} * sin({1} + {2}) + {3}".format(valA, valB, valC, valD)
+        elif valAction == "cos":
+            func = "y = {0} * cos({1} + {2}) + {3}".format(valA, valB, valC, valD)
+        elif valAction == "tg":
+            func = "y = {0} * tg({1} + {2}) + {3}".format(valA, valB, valC, valD)
+        elif valAction == "cotg":
+            func = "y = {0} * cotg({1} + {2}) + {3}".format(valA, valB, valC, valD)
+        else:
+            func = "Chybí ti hodnoty!"
+        
+        display.config(state="normal")
+        display.insert(tk.INSERT, func)
+        display.config(state="disabled")
 
 
 app = Application()
