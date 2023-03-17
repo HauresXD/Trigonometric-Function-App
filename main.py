@@ -130,56 +130,51 @@ class Application(tk.Tk):
         lineWidth = self.entryLineWidth.get()
         grid = self.gridOptVar.get()
 
-        # if valAction == "sin":
-        #     func = "y = {0} * sin({1} + {2}) + {3}".format(valA, valB, valC, valD)
-        #     query = 1
-        #     q = sin(int(valB) + int(valC))
-        #     s = int(valA) * q + int(valD)
-        # elif valAction == "cos":
-        #     func = "y = {0} * cos({1} + {2}) + {3}".format(valA, valB, valC, valD)
-        #     query = 1
-        #     q = cos(int(valB) + int(valC))
-        #     s = int(valA) * q + int(valD)
-        # elif valAction == "tg":
-        #     func = "y = {0} * tg({1} + {2}) + {3}".format(valA, valB, valC, valD)
-        #     query = 1
-        #     q = tan(int(valB) + int(valC))
-        #     s = int(valA) * q + int(valD)
-        # elif valAction == "cotg":
-        #     func = "y = {0} * cotg({1} + {2}) + {3}".format(valA, valB, valC, valD)
-        #     query = 1
-        #     q = 1/(tan(int(valB) + int(valC)))
-        #     s = int(valA) * q + int(valD)
-        # else:
-        #     func = "Chybí ti hodnoty!"
-        #     query = 0
-        
-        # display.config(state="normal")
-        # display.insert(tk.INSERT, func)
-        # display.config(state="disabled")
-
-        # if query != 0:
-        #     plt.plot([1,2,3], [4,5,6])
-        #     if grid == 1:
-        #         plt.grid()
-        #     plt.show()
-
-        # !!!!!!!!!!! WORK IN PROGRESS !!!!!!!!!!
-        x = [1,2,3]
-        y = [4,5,6]
-        if name != "":
-            plt.title(name)
-        if nameX != "":
-            plt.xlabel(nameX)
-        if nameY != "":
-            plt.ylabel(nameY)
-        if lineWidth != "":
-            plt.plot(x, y, linewidth=lineWidth)
+        if valAction == "sin":
+            func = "y = {0} * sin({1} + {2}) + {3}".format(valA, valB, valC, valD)
+            query = 1
+            q = sin(int(valB) + int(valC))
+            s = int(valA) * q + int(valD)
+        elif valAction == "cos":
+            func = "y = {0} * cos({1} + {2}) + {3}".format(valA, valB, valC, valD)
+            query = 1
+            q = cos(int(valB) + int(valC))
+            s = int(valA) * q + int(valD)
+        elif valAction == "tg":
+            func = "y = {0} * tg({1} + {2}) + {3}".format(valA, valB, valC, valD)
+            query = 1
+            q = tan(int(valB) + int(valC))
+            s = int(valA) * q + int(valD)
+        elif valAction == "cotg":
+            func = "y = {0} * cotg({1} + {2}) + {3}".format(valA, valB, valC, valD)
+            query = 1
+            q = 1/(tan(int(valB) + int(valC)))
+            s = int(valA) * q + int(valD)
         else:
-            plt.plot(x, y)
-        if grid == 1:
-            plt.grid()
-        plt.show()
+            func = "Chybí ti hodnoty!"
+            query = 0
+        
+        display.config(state="normal")
+        display.delete('1.0', tk.END)
+        display.insert(tk.INSERT, func)
+        display.config(state="disabled")
+
+        if query != 0:
+            x = [1,2,3]
+            y = [4,5,6]
+            if name != "":
+                plt.title(name)
+            if nameX != "":
+                plt.xlabel(nameX)
+            if nameY != "":
+                plt.ylabel(nameY)
+            if lineWidth != "":
+                plt.plot(x, y, linewidth=lineWidth)
+            else:
+                plt.plot(x, y)
+            if grid == 1:
+                plt.grid()
+            plt.show()
 
 
 app = Application()
