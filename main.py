@@ -19,6 +19,7 @@ class Application(tk.Tk):
         ## Basic "all-n-all" setup
         self.title(self.name)
         self.bind("<Escape>", self.quit)
+        self.bind('<Return>', self.draw)
         self.geometry("1300x700")
         self.resizable(width=tk.FALSE, height=tk.FALSE)
         if platform.system() == "Windows":
@@ -116,7 +117,7 @@ class Application(tk.Tk):
     def quit(self, event=None):
         super().quit()
 
-    def draw(self): 
+    def draw(self, *arg): 
         valA = self.entryA.get()
         valB = self.entryB.get()
         valC = self.entryC.get()
@@ -162,12 +163,9 @@ class Application(tk.Tk):
         if query != 0:
             x = [1,2,3]
             y = [4,5,6]
-            if name != "":
-                plt.title(name)
-            if nameX != "":
-                plt.xlabel(nameX)
-            if nameY != "":
-                plt.ylabel(nameY)
+            plt.title(name)
+            plt.xlabel(nameX)
+            plt.ylabel(nameY)
             if lineWidth != "":
                 plt.plot(x, y, linewidth=lineWidth)
             else:
