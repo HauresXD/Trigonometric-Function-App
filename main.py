@@ -133,26 +133,18 @@ class Application(tk.Tk):
             lineWidth = 1
         grid = self.gridOptVar.get()
 
-        if valAction == "sin":
+        if valAction == "sin": # Pro vhazování hodnot do grafu je potřeba --> FLOAT
             func = "y = {0} * sin({1} + {2}) + {3}".format(valA, valB, valC, valD)
             query = 1
-            q = sin(int(valB) + int(valC))
-            s = int(valA) * q + int(valD)
         elif valAction == "cos":
             func = "y = {0} * cos({1} + {2}) + {3}".format(valA, valB, valC, valD)
             query = 1
-            q = cos(int(valB) + int(valC))
-            s = int(valA) * q + int(valD)
         elif valAction == "tg":
             func = "y = {0} * tg({1} + {2}) + {3}".format(valA, valB, valC, valD)
             query = 1
-            q = tan(int(valB) + int(valC))
-            s = int(valA) * q + int(valD)
         elif valAction == "cotg":
             func = "y = {0} * cotg({1} + {2}) + {3}".format(valA, valB, valC, valD)
             query = 1
-            q = 1/(tan(int(valB) + int(valC)))
-            s = int(valA) * q + int(valD)
         else:
             func = "Chybí ti hodnoty!"
             query = 0
