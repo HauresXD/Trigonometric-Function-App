@@ -111,7 +111,7 @@ class Application(tk.Tk):
         self.drawBtn.grid(row=0, column=1, pady=10, sticky=tk.NSEW)
         self.equasionLabel = tk.Label(self.actionFrame, text="Funkce:")
         self.equasionLabel.grid(row=1, column=0, padx=10)
-        self.equasionDisplay = tk.Text(self.actionFrame, state='disabled', width=30, height=1) # při zapisování se bude muset přepsat na state="normal"
+        self.equasionDisplay = tk.Text(self.actionFrame, state='disabled', width=30, height=1)
         self.equasionDisplay.grid(row=1, column=1)
 
     def quit(self, event=None):
@@ -129,6 +129,8 @@ class Application(tk.Tk):
         nameY = self.entryYAxis.get()
         name = self.entryName.get()
         lineWidth = self.entryLineWidth.get()
+        if lineWidth == "":
+            lineWidth = 1
         grid = self.gridOptVar.get()
 
         if valAction == "sin":
@@ -166,10 +168,7 @@ class Application(tk.Tk):
             plt.title(name)
             plt.xlabel(nameX)
             plt.ylabel(nameY)
-            if lineWidth != "":
-                plt.plot(x, y, linewidth=lineWidth)
-            else:
-                plt.plot(x, y)
+            plt.plot(x, y, linewidth=lineWidth)
             if grid == 1:
                 plt.grid()
             plt.show()
