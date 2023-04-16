@@ -45,6 +45,7 @@ class Application(tk.Tk):
         ## Options Frame - display options
         self.displayFrame = tk.Frame(self.optionsFrame)
         self.displayFrame.pack(fill=tk.X)
+        
         # var kde vykreslit graf
         self.displayOptVar = tk.StringVar(value="program")
         self.displayOpt1 = tk.Radiobutton(self.displayFrame, text="V Programu", font=(None, 12), variable=self.displayOptVar, value="program")
@@ -155,8 +156,10 @@ class Application(tk.Tk):
         display.config(state="disabled")
 
         if query != 0:
+            # -------------------- ODDĚLAT 
             x = [1,2,3]
             y = [4,5,6]
+            # ----------------------------
             plt.title(name)
             plt.xlabel(nameX)
             plt.ylabel(nameY)
