@@ -79,6 +79,7 @@ class Application(tk.Tk):
         self.labelTypeCBox = tk.Label(self.selectionFrame, text="Typ grafu:")
         self.labelTypeCBox.grid(row=4, column=0, padx=10, pady=15)
         self.typeCBox = ttk.Combobox(self.selectionFrame, values=("sin", "cos", "tg", "cotg"))
+        self.typeCBox.current(0)
         self.typeCBox.grid(row=4, column=1, padx=10, pady=15)
 
         # Graph selections right side
