@@ -16,6 +16,7 @@ class Application(tk.Tk):
 
     def __init__(self):
         super().__init__(className=self.name)
+
         ## Basic "all-n-all" setup
         self.title(self.name)
         self.bind("<Escape>", self.quit)
@@ -52,8 +53,6 @@ class Application(tk.Tk):
         self.displayOpt1.pack(side=tk.LEFT, padx=20)
         self.displayOpt2 = tk.Radiobutton(self.displayFrame, text="Samostatně", font=(None, 12), variable=self.displayOptVar, value="standalone")
         self.displayOpt2.pack(side=tk.LEFT, padx=20)
-        self.displaySelectBtn = tk.Button(self.displayFrame, text="Vybrat Soubor")
-        self.displaySelectBtn.pack(side=tk.RIGHT, padx=20)
 
         ## Options Frame - graph selections
         self.selectionFrame = tk.Frame(self.optionsFrame)
@@ -61,19 +60,19 @@ class Application(tk.Tk):
         self.selectionFrame.place(relx=.45, rely=.45, anchor=tk.CENTER)
 
         # Graph selections left side
-        self.labelA = tk.Label(self.selectionFrame, text="Hodnota A:")
+        self.labelA = tk.Label(self.selectionFrame, text="Hodnota a:")
         self.labelA.grid(row=0, column=0, padx=10, pady=15)
         self.entryA = tk.Entry(self.selectionFrame)
         self.entryA.grid(row=0, column=1, padx=10, pady=15)
-        self.labelB = tk.Label(self.selectionFrame, text="Hodnota B [rad]:")
+        self.labelB = tk.Label(self.selectionFrame, text="Hodnota b [rad]:")
         self.labelB.grid(row=1, column=0, padx=10, pady=15)
         self.entryB = tk.Entry(self.selectionFrame)
         self.entryB.grid(row=1, column=1, padx=10, pady=15)
-        self.labelC = tk.Label(self.selectionFrame, text="Hodnota C:")
+        self.labelC = tk.Label(self.selectionFrame, text="Hodnota c:")
         self.labelC.grid(row=2, column=0, padx=10, pady=15)
         self.entryC = tk.Entry(self.selectionFrame)
         self.entryC.grid(row=2, column=1, padx=10, pady=15)
-        self.labelD = tk.Label(self.selectionFrame, text="Hodnota D:")
+        self.labelD = tk.Label(self.selectionFrame, text="Hodnota d:")
         self.labelD.grid(row=3, column=0, padx=10, pady=15)
         self.entryD = tk.Entry(self.selectionFrame)
         self.entryD.grid(row=3, column=1, padx=10, pady=15)
@@ -119,10 +118,15 @@ class Application(tk.Tk):
         super().quit()
 
     def draw(self, *arg): 
+        check = []
         valA = self.entryA.get()
         valB = self.entryB.get()
         valC = self.entryC.get()
         valD = self.entryD.get()
+        check.append(valA)
+        check.append(valB)
+        check.append(valC)
+        check.append(valD)
         valAction = self.typeCBox.get()
         display = self.equasionDisplay
 
@@ -155,18 +159,34 @@ class Application(tk.Tk):
         display.insert(tk.INSERT, func)
         display.config(state="disabled")
 
-        if query != 0:
-            # -------------------- ODDĚLAT 
-            x = [1,2,3]
-            y = [4,5,6]
-            # ----------------------------
-            plt.title(name)
-            plt.xlabel(nameX)
-            plt.ylabel(nameY)
-            plt.plot(x, y, linewidth=lineWidth)
-            if grid == 1:
-                plt.grid()
-            plt.show()
+        # if query != 0:
+        #     # -------------------- ODDĚLAT 
+        #     x = [1,2,3]
+        #     y = [4,5,6]
+        #     # ----------------------------
+        #     plt.title(name)
+        #     plt.xlabel(nameX)
+        #     plt.ylabel(nameY)
+        #     plt.plot(x, y, linewidth=lineWidth)
+        #     if grid == 1:
+        #         plt.grid()
+        #     plt.show()
+        
+        def entryValidate():
+            for item in check:
+                try:
+                    try:
+                        int(item)
+                    except:
+                        float(item)
+                except:
+                    return False
+            return True        
+
+        if entryValidate() == True:
+            print("g")
+        else:
+            print("no")
 
 
 app = Application()
