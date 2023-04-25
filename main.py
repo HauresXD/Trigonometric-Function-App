@@ -276,8 +276,6 @@ class Application(tk.Tk):
                 elif valAction == "cotg":
                     x = np.linspace(-2 * np.pi, 0 * np.pi, 1000)
                     y = 1 / (valA * np.tan(valB * x + valC))
-                    # plt.plot(x, y + valD, linewidth=lineWidth)
-                    # plt.ylim(-10, 10)
                     self.graphSubplot.plot(x, y + valD, linewidth=lineWidth)
                     if valA > 10:
                         self.graphSubplot.set_ylim([-valA, valA])
