@@ -23,8 +23,6 @@ class Application(tk.Tk):
         self.bind('<Return>', self.draw)
         self.geometry("1300x700")
         self.resizable(width=tk.FALSE, height=tk.FALSE)
-        if platform.system() == "Windows":
-            self.iconbitmap("images/icon.ico")
 
         ## Label Frame setup + Label + Separator
         self.headerFrame = tk.LabelFrame(self, borderwidth = 0, highlightthickness = 0)
