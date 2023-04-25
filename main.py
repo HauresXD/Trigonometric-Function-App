@@ -6,9 +6,11 @@ import tkinter.ttk as ttk
 import numpy as np
 import matplotlib
 from matplotlib import pyplot as plt
+from matplotlib.figure import Figure
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 
 
-matplotlib.use('Qt5Agg')
+matplotlib.use('TkAgg')
 class Application(tk.Tk):
     name = basename(splitext(basename(__file__.capitalize()))[0])
     name = "Goniometrické funkce"
@@ -55,6 +57,7 @@ class Application(tk.Tk):
         self.selectionFrame = tk.Frame(self.optionsFrame)
         self.selectionFrame.pack(pady=50)
         self.selectionFrame.place(relx=.45, rely=.45, anchor=tk.CENTER)
+
 
         # Graph selections left side
         self.labelA = tk.Label(self.selectionFrame, text="Hodnota a:")
@@ -117,6 +120,12 @@ class Application(tk.Tk):
         self.equasionDisplay = tk.Text(self.actionFrame, state='disabled', width=30, height=1)
         self.equasionDisplay.grid(row=1, column=1)
 
+        ## Graph Frame - graph
+        self.graphFigure = Figure(figsize=(5, 5), dpi=100)
+        self.graphSubplot = self.graphFigure.add_subplot(111)
+        self.graphCanvas = FigureCanvasTkAgg(self.graphFigure, master=self.graphFrame)
+        self.graphToolbar = NavigationToolbar2Tk(self.graphCanvas, self.graphFrame)
+
     def quit(self, event=None):
         super().quit()
 
@@ -147,6 +156,7 @@ class Application(tk.Tk):
         lineWidth = self.entryLineWidth.get()
         check.append(lineWidth)
         grid = self.gridOptVar.get()
+        where = self.displayOptVar.get()
 
         if valAction == "sin": 
             func = "y = {0} * sin({1} + {2}°) + {3}".format(valA, valB, valC, valD)
@@ -178,38 +188,111 @@ class Application(tk.Tk):
             display.config(state="disabled")
             return False
 
+
         if query != 0:
-            # ----------------------------
+
+            self.graphSubplot.clear()
+
             valA = float(valA)
             valB = float(valB)
             valC = float(valC)
-            valD = float(valD) 
+            valD = float(valD)
+            if where == "standalone":  
+                if valAction == "sin":
+                    x = np.arange(0, 4 * np.pi, 0.1)   # vždy nechat 0, počet period (2 = 1T), vždy nechat 0.1
+                    y = valA * np.sin(valB * x + valC)
+                    plt.plot(x, y + valD, linewidth=lineWidth)
+                elif valAction == "cos":
+                    x = np.arange(0, 4 * np.pi, 0.1)  
+                    y = valA * np.cos(valB * x + valC)
+                    plt.plot(x, y + valD, linewidth=lineWidth)
+                elif valAction == "tg":
+                    x = np.linspace(-2 * np.pi, 0 * np.pi, 1000) # vždy nechat -2, počet period (2 = 1T), vždy nechat 1000
+                    y = valA * np.tan(valB * x + valC)
+                    plt.plot(x, y + valD, linewidth=lineWidth)
+                    plt.ylim(-10, 10)
+                elif valAction == "cotg":
+                    x = np.linspace(-2 * np.pi, 0 * np.pi, 1000)
+                    y = 1 / (valA * np.tan(valB * x + valC))
+                    plt.plot(x, y + valD, linewidth=lineWidth)
+                    plt.ylim(-10, 10)
+                
+                plt.title(name)
+                plt.xlabel(nameX)
+                plt.ylabel(nameY)
+                if grid == 1:
+                    plt.grid()
+                plt.show()        
+            else:
+                if valAction == "sin":
+                    x = np.arange(0, 4 * np.pi, 0.1)   # vždy nechat 0, počet period (2 = 1T), vždy nechat 0.1
+                    y = valA * np.sin(valB * x + valC)
+                    self.graphSubplot.plot(x, y + valD, linewidth=lineWidth)
+                    self.graphSubplot.set_title(name)
+                    self.graphSubplot.set_xlabel(nameX)
+                    self.graphSubplot.set_ylabel(nameY)
+                    if grid == 1:
+                        self.graphSubplot.grid()
+                    self.graphCanvas.draw()
+                    self.graphCanvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
+                    self.graphToolbar.update()
+                    self.graphCanvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
 
-            if valAction == "sin":
-                x = np.arange(0, 4 * np.pi, 0.1)   # vždy nechat 0, počet period (2 = 1T), vždy nechat 0.1
-                y = valA * np.sin(valB * x + valC)
-                plt.plot(x, y + valD, linewidth=lineWidth)
-            elif valAction == "cos":
-                x = np.arange(0, 4 * np.pi, 0.1)  
-                y = valA * np.cos(valB * x + valC)
-                plt.plot(x, y + valD, linewidth=lineWidth)
-            elif valAction == "tg":
-                x = np.linspace(-2 * np.pi, 0 * np.pi, 1000) # vždy nechat -2, počet period (2 = 1T), vždy nechat 1000
-                y = valA * np.tan(valB * x + valC)
-                plt.plot(x, y + valD, linewidth=lineWidth)
-                plt.ylim(-10, 10)
-            elif valAction == "cotg":
-                x = np.linspace(-2 * np.pi, 0 * np.pi, 1000)
-                y = 1 / (valA * np.tan(valB * x + valC))
-                plt.plot(x, y + valD, linewidth=lineWidth)
-                plt.ylim(-10, 10)
-            # ----------------------------
-            plt.title(name)
-            plt.xlabel(nameX)
-            plt.ylabel(nameY)
-            if grid == 1:
-                plt.grid()
-            plt.show()        
+
+                elif valAction == "cos":
+                    x = np.arange(0, 4 * np.pi, 0.1)  
+                    y = valA * np.cos(valB * x + valC)
+                    self.graphSubplot.plot(x, y + valD, linewidth=lineWidth)
+                    self.graphSubplot.set_title(name)
+                    self.graphSubplot.set_xlabel(nameX)
+                    self.graphSubplot.set_ylabel(nameY)
+                    if grid == 1:
+                        self.graphSubplot.grid()
+                    self.graphCanvas.draw()
+                    self.graphCanvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
+                    self.graphToolbar.update()
+                    self.graphCanvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
+
+
+                elif valAction == "tg":
+                    x = np.linspace(-2 * np.pi, 0 * np.pi, 1000) # vždy nechat -2, počet period (2 = 1T), vždy nechat 1000
+                    y = valA * np.tan(valB * x + valC)
+                    self.graphSubplot.plot(x, y + valD, linewidth=lineWidth)
+                    if valA > 10:
+                        self.graphSubplot.set_ylim([-valA, valA])
+                    else:
+                        self.graphSubplot.set_ylim([-10, 10])
+                    self.graphSubplot.set_title(name)
+                    self.graphSubplot.set_xlabel(nameX)
+                    self.graphSubplot.set_ylabel(nameY)
+                    if grid == 1:
+                        self.graphSubplot.grid()
+                    self.graphCanvas.draw()
+                    self.graphCanvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
+                    self.graphToolbar.update()
+                    self.graphCanvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
+
+
+                elif valAction == "cotg":
+                    x = np.linspace(-2 * np.pi, 0 * np.pi, 1000)
+                    y = 1 / (valA * np.tan(valB * x + valC))
+                    # plt.plot(x, y + valD, linewidth=lineWidth)
+                    # plt.ylim(-10, 10)
+                    self.graphSubplot.plot(x, y + valD, linewidth=lineWidth)
+                    if valA > 10:
+                        self.graphSubplot.set_ylim([-valA, valA])
+                    else:
+                        self.graphSubplot.set_ylim([-10, 10])
+                    self.graphSubplot.set_title(name)
+                    self.graphSubplot.set_xlabel(nameX)
+                    self.graphSubplot.set_ylabel(nameY)
+                    if grid == 1:
+                        self.graphSubplot.grid()
+                    self.graphCanvas.draw()
+                    self.graphCanvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
+                    self.graphToolbar.update()
+                    self.graphCanvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
+                
 
 
 app = Application()

@@ -5,6 +5,8 @@
 - matplotlib
 - tkinter
 - numpy
+- python3-pil 
+- python3-pil.imagetk
 
 <br>
 
