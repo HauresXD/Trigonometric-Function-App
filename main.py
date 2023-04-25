@@ -237,8 +237,6 @@ class Application(tk.Tk):
                     self.graphCanvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
                     self.graphToolbar.update()
                     self.graphCanvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
-
-
                 elif valAction == "cos":
                     x = np.arange(0, 4 * np.pi, 0.1)  
                     y = valA * np.cos(valB * x + valC)
@@ -252,8 +250,6 @@ class Application(tk.Tk):
                     self.graphCanvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
                     self.graphToolbar.update()
                     self.graphCanvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
-
-
                 elif valAction == "tg":
                     x = np.linspace(-2 * np.pi, 0 * np.pi, 1000) # vždy nechat -2, počet period (2 = 1T), vždy nechat 1000
                     y = valA * np.tan(valB * x + valC)
@@ -271,8 +267,6 @@ class Application(tk.Tk):
                     self.graphCanvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
                     self.graphToolbar.update()
                     self.graphCanvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
-
-
                 elif valAction == "cotg":
                     x = np.linspace(-2 * np.pi, 0 * np.pi, 1000)
                     y = 1 / (valA * np.tan(valB * x + valC))
