@@ -193,6 +193,16 @@ class Application(tk.Tk):
                 x = np.arange(0, 4 * np.pi, 0.1)  
                 y = valA * np.cos(valB * x + valC)
                 plt.plot(x, y + valD, linewidth=lineWidth)
+            elif valAction == "tg":
+                x = np.linspace(-2 * np.pi, 0 * np.pi, 1000) # vždy nechat -2, počet period (2 = 1T), vždy nechat 1000
+                y = valA * np.tan(valB * x + valC)
+                plt.plot(x, y + valD, linewidth=lineWidth)
+                plt.ylim(-10, 10)
+            elif valAction == "cotg":
+                x = np.linspace(-2 * np.pi, 0 * np.pi, 1000)
+                y = 1 / (valA * np.tan(valB * x + valC))
+                plt.plot(x, y + valD, linewidth=lineWidth)
+                plt.ylim(-10, 10)
             # ----------------------------
             plt.title(name)
             plt.xlabel(nameX)
