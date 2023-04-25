@@ -3,8 +3,7 @@
 from os.path import basename, splitext
 import tkinter as tk
 import tkinter.ttk as ttk
-import platform
-from math import sin, cos, tan
+import numpy as np
 import matplotlib
 from matplotlib import pyplot as plt
 
@@ -61,18 +60,22 @@ class Application(tk.Tk):
         self.labelA = tk.Label(self.selectionFrame, text="Hodnota a:")
         self.labelA.grid(row=0, column=0, padx=10, pady=15)
         self.entryA = tk.Entry(self.selectionFrame)
+        self.entryA.insert(tk.END, 1)
         self.entryA.grid(row=0, column=1, padx=10, pady=15)
-        self.labelB = tk.Label(self.selectionFrame, text="Hodnota b [rad]:")
+        self.labelB = tk.Label(self.selectionFrame, text="Hodnota b:")
         self.labelB.grid(row=1, column=0, padx=10, pady=15)
         self.entryB = tk.Entry(self.selectionFrame)
+        self.entryB.insert(tk.END, 1)
         self.entryB.grid(row=1, column=1, padx=10, pady=15)
-        self.labelC = tk.Label(self.selectionFrame, text="Hodnota c:")
+        self.labelC = tk.Label(self.selectionFrame, text="Hodnota c [°]:")
         self.labelC.grid(row=2, column=0, padx=10, pady=15)
         self.entryC = tk.Entry(self.selectionFrame)
+        self.entryC.insert(tk.END, 0)
         self.entryC.grid(row=2, column=1, padx=10, pady=15)
         self.labelD = tk.Label(self.selectionFrame, text="Hodnota d:")
         self.labelD.grid(row=3, column=0, padx=10, pady=15)
         self.entryD = tk.Entry(self.selectionFrame)
+        self.entryD.insert(tk.END, 0)
         self.entryD.grid(row=3, column=1, padx=10, pady=15)
         self.labelTypeCBox = tk.Label(self.selectionFrame, text="Typ grafu:")
         self.labelTypeCBox.grid(row=4, column=0, padx=10, pady=15)
@@ -96,6 +99,7 @@ class Application(tk.Tk):
         self.labelLineWidth = tk.Label(self.selectionFrame, text="Tloušťka čar:")
         self.labelLineWidth.grid(row=3, column=2, padx=10, pady=15)
         self.entryLineWidth = tk.Entry(self.selectionFrame)
+        self.entryLineWidth.insert(tk.END, 1)
         self.entryLineWidth.grid(row=3, column=3, padx=10, pady=15)
         self.gridOptVar = tk.IntVar(value=0)
         self.labelGrid = tk.Label(self.selectionFrame, text="Mřížka:")
@@ -116,6 +120,14 @@ class Application(tk.Tk):
     def quit(self, event=None):
         super().quit()
 
+    def entryValidate(self, check):
+        for item in check:
+            try:
+                float(item)
+            except:
+                return False
+        return True
+
     def draw(self, *arg): 
         check = []
         valA = self.entryA.get()
@@ -133,21 +145,20 @@ class Application(tk.Tk):
         nameY = self.entryYAxis.get()
         name = self.entryName.get()
         lineWidth = self.entryLineWidth.get()
-        if lineWidth == "":
-            lineWidth = 1
+        check.append(lineWidth)
         grid = self.gridOptVar.get()
 
-        if valAction == "sin": # Pro vhazování hodnot do grafu je potřeba --> FLOAT
-            func = "y = {0} * sin({1} + {2}) + {3}".format(valA, valB, valC, valD)
+        if valAction == "sin": 
+            func = "y = {0} * sin({1} + {2}°) + {3}".format(valA, valB, valC, valD)
             query = 1
         elif valAction == "cos":
-            func = "y = {0} * cos({1} + {2}) + {3}".format(valA, valB, valC, valD)
+            func = "y = {0} * cos({1} + {2}°) + {3}".format(valA, valB, valC, valD)
             query = 1
         elif valAction == "tg":
-            func = "y = {0} * tg({1} + {2}) + {3}".format(valA, valB, valC, valD)
+            func = "y = {0} * tg({1} + {2}°) + {3}".format(valA, valB, valC, valD)
             query = 1
         elif valAction == "cotg":
-            func = "y = {0} * cotg({1} + {2}) + {3}".format(valA, valB, valC, valD)
+            func = "y = {0} * cotg({1} + {2}°) + {3}".format(valA, valB, valC, valD)
             query = 1
         else:
             func = "Chybí ti hodnoty!"
@@ -158,34 +169,37 @@ class Application(tk.Tk):
         display.insert(tk.INSERT, func)
         display.config(state="disabled")
 
-        # if query != 0:
-        #     # -------------------- ODDĚLAT 
-        #     x = [1,2,3]
-        #     y = [4,5,6]
-        #     # ----------------------------
-        #     plt.title(name)
-        #     plt.xlabel(nameX)
-        #     plt.ylabel(nameY)
-        #     plt.plot(x, y, linewidth=lineWidth)
-        #     if grid == 1:
-        #         plt.grid()
-        #     plt.show()
-        
-        def entryValidate():
-            for item in check:
-                try:
-                    try:
-                        int(item)
-                    except:
-                        float(item)
-                except:
-                    return False
-            return True        
-
-        if entryValidate() == True:
-            print("g")
+        if self.entryValidate(check) == True:
+            pass
         else:
-            print("no")
+            display.config(state="normal")
+            display.delete('1.0', tk.END)
+            display.insert(tk.INSERT, "Zapsali jste špatné hodnoty!")
+            display.config(state="disabled")
+            return False
+
+        if query != 0:
+            # ----------------------------
+            valA = float(valA)
+            valB = float(valB)
+            valC = float(valC)
+            valD = float(valD) 
+
+            if valAction == "sin":
+                x = np.arange(0, 4 * np.pi, 0.1)   # vždy nechat 0, počet period (2 = 1T), vždy nechat 0.1
+                y = valA * np.sin(valB * x + valC)
+                plt.plot(x, y + valD, linewidth=lineWidth)
+            elif valAction == "cos":
+                x = np.arange(0, 4 * np.pi, 0.1)  
+                y = valA * np.cos(valB * x + valC)
+                plt.plot(x, y + valD, linewidth=lineWidth)
+            # ----------------------------
+            plt.title(name)
+            plt.xlabel(nameX)
+            plt.ylabel(nameY)
+            if grid == 1:
+                plt.grid()
+            plt.show()        
 
 
 app = Application()
