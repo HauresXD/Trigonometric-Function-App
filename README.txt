@@ -2,6 +2,7 @@
 Miniprojekt - Goniometrické funkce
 
 Projekt 4. ročník - Patrik Markvart
+Vše můžete najít na https://github.com/mar39178/MINIPROJEKT.git
 
 Obsah:
     - main.py
