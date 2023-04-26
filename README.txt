@@ -7,7 +7,9 @@ Obsah:
     - main.py
     - README.txt
     - licence
-    - main.exe
+    - /dist/main.exe
+    - /build/main/*
+    - main.spec
 
 Nutné python knihovny:
     - základní python
