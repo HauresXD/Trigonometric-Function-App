@@ -1,0 +1,21 @@
+------------------------------------------------------------------------------------------------------
+Miniprojekt - Goniometrické funkce
+
+Projekt 4. ročník - Patrik Markvart
+
+Obsah:
+    - main.py
+    - README.txt
+    - licence
+    - main.exe
+
+Nutné python knihovny:
+    - základní python
+    - matplotlib
+    - tkinter
+    - numpy
+    - python3-pil 
+    - python3-pil.imagetk
+
+!! Funkčnost main.exe není zaručena z důvodu možných chybějících zkrytých knihoven !!
+------------------------------------------------------------------------------------------------------
